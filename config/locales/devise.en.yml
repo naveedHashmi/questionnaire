@@ -1,0 +1,4 @@
+en:
+  devise:
+    failure:
+      unconfirmed: 'You have to confirm your email address before continuing.'
