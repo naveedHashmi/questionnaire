@@ -17,3 +17,11 @@
 //= require popper
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(function() {
+  setTimeout(function() {
+    $('.alert').fadeOut('slow', function() {
+      $(this).remove();
+    });
+  }, 5000); // 5 seconds
+});

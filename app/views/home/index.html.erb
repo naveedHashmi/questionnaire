@@ -9,8 +9,32 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Questionnaire</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Log in</a>
+        <% if user_signed_in? %>
+          <li class="nav-item"></li>
+            <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+          <% else %>
+            <li class="nav-item"></li>
+              <%= link_to 'Sign up', new_user_registration_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item"></li>
+              <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
       </li>
   </div>
 </nav>
+<div class="container d-flex flex-column justify-content-center align-items-center h-100">
+  <div class="text-center mb-4">
+    <p class="lead hero-text">
+      Welcome to our questionnaire! The questionnaire consists of a series of questions. To get started, please click the "Attempt Questionnaire" button below. The questionnaire should take approximately 10-15 minutes to complete. Please answer all questions as honestly and accurately as possible.
+
+      At the end of the questionnaire, you will have the option to submit your responses and immediately the result will be announced.
+    </p>
+  </div>
+  <% if user_signed_in? %>
+    <%= link_to 'Attempt Questionnaire', '#', class: "btn btn-primary btn-lg" %>
+  <% else %>
+    <%= link_to 'Attempt Questionnaire', new_user_session_path, class: "btn btn-primary btn-lg" %>
+  <% end %>
+</div>
