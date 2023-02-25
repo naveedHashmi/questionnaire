@@ -1,0 +1,43 @@
+<%= form_with(model: questionnaire, local: true) do |f| %>
+  <% if questionnaire.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(questionnaire.errors.count, "error") %> prohibited this questionnaire from being saved:</h4>
+
+      <ul>
+      <% questionnaire.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <%= f.text_field :title, class: "form-control", placeholder: 'Questionnaire title...', required: true %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <%= f.number_field :total_score, class: "form-control", placeholder: 'Total score...', required: true %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.text_area :description, class: "form-control", placeholder: 'Questionnaire description...', required: true %>
+  </div>
+
+  <h3>Questions</h3>
+  <%= f.fields_for :questions do |question_form| %>
+    <%= render 'question_fields', f: question_form %>
+  <% end %>
+
+  <div class="form-group">
+    <%= link_to_add_association 'Add Question', f, :questions, class: "btn btn-primary float-right" %>
+  </div>
+
+  <div class="form-group mt-3">
+    <%= f.submit class: "btn btn-success" %>
+    <%= link_to 'Cancel', root_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

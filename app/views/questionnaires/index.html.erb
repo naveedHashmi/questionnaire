@@ -1,0 +1,34 @@
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Questionnaires</h1>
+    <%= link_to 'New Questionnaire', new_questionnaire_path, class: "btn btn-primary" %>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Questions</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @questionnaires.each do |questionnaire| %>
+        <tr>
+          <td><%= questionnaire.id %></td>
+          <td><%= questionnaire.title %></td>
+          <td><%= questionnaire.questions.count %></td>
+          <td class="text-center">
+            <%= link_to edit_questionnaire_path(questionnaire), class: "btn btn-secondary btn-sm" do %>
+              Edit
+            <% end %>
+            <%= link_to questionnaire_path(questionnaire), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" do %>
+              Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
