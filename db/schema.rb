@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_25_002357) do
+ActiveRecord::Schema.define(version: 2023_02_25_175351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "options", force: :cascade do |t|
+    t.bigint "question_id"
+    t.string "title", default: "", null: false
+    t.decimal "points", default: "0.0", null: false
+    t.index ["question_id"], name: "index_options_on_question_id"
+  end
+
+  create_table "questionnaires", force: :cascade do |t|
+    t.string "title", default: "", null: false
+    t.text "description", default: "", null: false
+    t.decimal "total_score", precision: 10, scale: 2
+    t.index ["title"], name: "index_questionnaires_on_title"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.bigint "questionnaire_id"
+    t.string "title", default: "", null: false
+    t.decimal "score", default: "0.0", null: false
+    t.string "question_type", default: "single_choice", null: false
+    t.index ["questionnaire_id"], name: "index_questions_on_questionnaire_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -42,4 +64,6 @@ ActiveRecord::Schema.define(version: 2023_02_25_002357) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "options", "questions"
+  add_foreign_key "questions", "questionnaires"
 end

@@ -4,6 +4,13 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     passwords: 'users/passwords'
   }
+
+  resources :questionnaires do
+    resources :questions do
+      resources :options, except: [:index]
+    end
+  end
+
   get 'home/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

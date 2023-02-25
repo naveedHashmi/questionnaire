@@ -1,0 +1,41 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="col-md-10">
+      <% if f.object.id.present? %>
+        <%= f.hidden_field :id %>
+      <% end %>
+
+      <div class="row">
+        <div class="col-md-7">
+          <div class="form-group">
+            <%= f.text_area :title, class: "form-control", placeholder: 'Question title...', required: true %>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= f.number_field :score, class: "form-control", placeholder: 'Score...', required: true %>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <%= f.select :question_type, [['Single Choice', 'single_choice'], ['Multi Choice', 'multi_choice']], {}, class: "form-control question-type", required: true %>
+          </div>
+        </div>
+      </div>
+
+      <%= f.fields_for :options do |option_form| %>
+        <%= render 'option_fields', f: option_form %>
+      <% end %>
+
+      <div class="form-group mt-3">
+        <%= link_to_add_association 'Add Option', f, :options, class: "btn btn-primary" %>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="form-group">
+        <%= link_to_remove_association "Remove Question", f, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
