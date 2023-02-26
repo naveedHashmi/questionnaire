@@ -1,13 +1,15 @@
-<div class="container d-flex flex-column justify-content-center align-items-center h-100">
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
   <div class="text-center mb-4">
-    <p class="lead hero-text">
+    <h3 class="">
       Welcome to our questionnaire! The questionnaire consists of a series of questions. To get started, please click the "Attempt Questionnaire" button below. The questionnaire should take approximately 10-15 minutes to complete. Please answer all questions as honestly and accurately as possible.
 
       At the end of the questionnaire, you will have the option to submit your responses and immediately the result will be announced.
-    </p>
+    </h3>
   </div>
   <% if user_signed_in? %>
-    <%= link_to 'Attempt Questionnaire', '#', class: "btn btn-primary btn-lg" %>
+    <% if !current_user.admin? %>
+      <%= link_to 'Attempt Questionnaire', fill_questionnaire_path, class: "btn btn-primary btn-lg" %>
+    <% end %>
   <% else %>
     <%= link_to 'Attempt Questionnaire', new_user_session_path, class: "btn btn-primary btn-lg" %>
   <% end %>

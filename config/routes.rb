@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   end
 
   get 'home/index'
+  get 'fill_questionnaire', to: 'users#fill_questionnaire'
+  post 'submit_answers', to: 'users#submit_answers'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'home#index'

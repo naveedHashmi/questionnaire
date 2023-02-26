@@ -1,0 +1,24 @@
+<div class="container mt-5 card">
+  <%= form_tag({controller: "users", action: "submit_answers"}, method: "post", id: "fill-questionnaire-form") do %>
+    <% @questionnaire.questions.each_with_index do |question, index| %>
+      <div class="question-container custom-card mt-2 mt-2 ">
+        <div class="card-body">
+          <h4 class="card-title"><%= index + 1 %>. <%= question.title %></h4>
+          <% question.options.each_with_index do |option, option_index| %>
+            <div class="option-container form-check">
+              <% if question.question_type == "single_choice" %>
+                <%= radio_button_tag "questionnaire[questions][#{question.id}][selected_option_id]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
+              <% else %>
+                <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
+              <% end %>
+              <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <%= submit_tag "Submit", id: "submit-answers-button", class: "btn btn-primary mb-3" %>
+  <% end %>
+</div>
+
+<%= render 'modal' %>
