@@ -20,6 +20,9 @@
           <td><%= questionnaire.title %></td>
           <td><%= questionnaire.questions.count %></td>
           <td class="text-center">
+            <%= link_to questionnaire_path(questionnaire), class: "btn btn-primary btn-sm" do %>
+              View
+            <% end %>
             <%= link_to edit_questionnaire_path(questionnaire), class: "btn btn-secondary btn-sm" do %>
               Edit
             <% end %>

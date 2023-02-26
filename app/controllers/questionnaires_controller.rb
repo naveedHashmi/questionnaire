@@ -1,4 +1,6 @@
 class QuestionnairesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :require_admin!
   before_action :set_questionnaire, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -51,6 +53,12 @@ class QuestionnairesController < ApplicationController
   end
 
   private
+
+  def require_admin!
+    unless current_user.admin?
+      redirect_to root_path
+    end
+  end
 
   def set_questionnaire
     @questionnaire = Questionnaire.find(params[:id])

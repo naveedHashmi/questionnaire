@@ -63,3 +63,18 @@
 .hero-text {
   font-size: 34px;
 }
+
+.custom-card {
+  transition: background-color 200ms cubic-bezier(0,0,0.2,1);
+  background-color: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 24px;
+  page-break-inside: avoid;
+  word-wrap: break-word;
+}
+
+.col-50 {
+  width: 50%;
+}
