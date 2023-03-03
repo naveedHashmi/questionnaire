@@ -7,10 +7,9 @@
           <%= f.file_field :picture, class: 'picture-option-field' %>
           <br>
           <img class="preview d-none" src="#" alt="Preview" width=300>
-
           <% if f.object.picture.attached? %>
             <div>
-              <%= image_tag f.object.picture.url, height: 72 %>
+              <%= image_tag url_for(f.object.picture), width: 300 %>
             </div>
           <% end %>
         </div>

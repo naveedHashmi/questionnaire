@@ -17,14 +17,26 @@
         </div>
       </div>
 
+      <% if f.object.id.present? %>
+        <%= f.fields_for :options do |option_form| %>
+          <%= render 'option_fields', f: option_form %>
+        <% end %>
+        <%= f.fields_for :range_options do |option_form| %>
+          <%= render 'range_option_fields', f: option_form %>
+        <% end %>
+        <%= f.fields_for :picture_options do |option_form| %>
+          <%= render 'picture_option_fields', f: option_form %>
+        <% end %>
+      <% end %>
+
       <div class="form-group mt-3">
-        <%= link_to_add_association 'Add Option', f, :options, class: "btn btn-primary option-button" %>
+        <%= link_to_add_association 'Add Option', f, :options, class: "btn btn-primary option-button #{(f.object.single_choice? || f.object.multiple_choice?) ? '' : 'd-none'}" %>
       </div>
       <div class="form-group mt-3">
-        <%= link_to_add_association 'Add Option', f, :range_options, class: "btn btn-primary d-none range-option-button" %>
+        <%= link_to_add_association 'Add Option', f, :range_options, class: "btn btn-primary range-option-button #{f.object.range? ? '' : 'd-none'}" %>
       </div>
       <div class="form-group mt-3">
-        <%= link_to_add_association 'Add Option', f, :picture_options, class: "btn btn-primary d-none picture-option-button" %>
+        <%= link_to_add_association 'Add Option', f, :picture_options, class: "btn btn-primary picture-option-button #{f.object.picture? ? '' : 'd-none'}" %>
       </div>
     </div>
 

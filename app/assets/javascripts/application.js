@@ -32,7 +32,7 @@ $(document).on('turbolinks:load', function() {
     var target = event.target;
     var questionType = target.value;
     var customCard = $($(target).parents('.custom-card'))
-    debugger
+
     if (questionType == 'multiple_choice' || questionType == 'single_choice') {
       customCard.find('.range-option-field, .picture-option-field, .range-option-button, .picture-option-button').addClass('d-none')
       customCard.find('.option-button').removeClass('d-none')
