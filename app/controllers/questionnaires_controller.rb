@@ -65,6 +65,6 @@ class QuestionnairesController < ApplicationController
   end
 
   def questionnaire_params
-    params.require(:questionnaire).permit(:title, :total_score, :description, questions_attributes: [:id, :title, :score, :question_type, :_destroy, options_attributes: [:id, :title, :points, :_destroy]])
+    params.require(:questionnaire).permit(:title, :description, questions_attributes: [:id, :title, :question_type, :_destroy, options_attributes: [:id, :title, :points, :_destroy]])
   end
 end
