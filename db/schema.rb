@@ -38,7 +38,8 @@ ActiveRecord::Schema.define(version: 2023_03_03_041348) do
 
   create_table "options", force: :cascade do |t|
     t.bigint "question_id"
-    t.string "title", default: "", null: false
+    t.string "title", default: ""
+
     t.decimal "witch_points", precision: 10, scale: 2
     t.decimal "wizard_points", precision: 10, scale: 2
     t.decimal "lepracaun_points", precision: 10, scale: 2

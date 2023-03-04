@@ -6,5 +6,6 @@ class UsersController < ApplicationController
   end
 
   def submit_answers
+    current_user.recalculate_score(params.permit!)
   end
 end

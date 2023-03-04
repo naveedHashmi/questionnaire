@@ -13,10 +13,14 @@
               <% elsif question.range? %>
                 <div class="row">
                   <div class="col-md-5">
-                    <%= range_field_tag :total_score, min: option.min_range, max: option.max_range, step: 1, class: 'slider' %>
+                    <%= option_index + 1 %>. <%= label_tag "option_#{option.id}", "adfad adfasdf asdfasdfa asdfasfa", class: "form-check-label" %>
+                    <br>
+                    <%= range_field_tag "option_#{option.id}", min: option.min_range, max: option.max_range, step: 1, class: 'slider' %>
+                    <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input invisible option_#{option.id}", checked: true %>
                   </div>
                   <div class="col-md-1 text-center">
-                    <div id="selected-range-value" class="btn-primary">
+                    <br>
+                    <div class="selected-range-value option_<%= option.id %> btn-primary mb-1">
                       <%= option.min_range %>
                     </div>
                   </div>
@@ -35,5 +39,3 @@
     <%= submit_tag "Submit", id: "submit-answers-button", class: "btn btn-primary mb-3" %>
   <% end %>
 </div>
-
-<%= render 'modal' %>

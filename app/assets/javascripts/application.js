@@ -61,7 +61,10 @@ $(document).on('change', '.picture-option-field', function() {
 });
 
 $(function() {
-  $('body').on("change", "#total_score", function(){
-    $("#selected-range-value").html(event.target.value);
+  $('body').on("change", $('input[type="range"]'), function(){
+    var targetId = $(event.target).attr('id')
+
+    $(`.selected-range-value.${targetId}`).html(event.target.value);
+    $(`input[type="checkbox"].${targetId}`).val(event.target.value);
   })
 });

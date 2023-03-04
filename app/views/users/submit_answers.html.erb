@@ -1,0 +1,69 @@
+
+<div class="container my-5">
+  <h1 class="text-center mb-4">Your Score</h1>
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Wizard</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.wizard + 10 %>%;" aria-valuenow="<%= current_user.wizard %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.wizard.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Witch</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.witch + 10 %>%;" aria-valuenow="<%= current_user.witch %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.witch.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Leprechaun</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.lepracaun + 10 %>%;" aria-valuenow="<%= current_user.lepracaun %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.lepracaun.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Dragon</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.dragon + 10 %>%;" aria-valuenow="<%= current_user.dragon %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.dragon.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Human</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.human + 10 %>%;" aria-valuenow="<%= current_user.human %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.human.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Elf</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.elf + 10 %>%;" aria-valuenow="<%= current_user.elf %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.elf.round(2) %>%</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <h4 class="mb-0">Fairy</h4>
+        </div>
+        <div class="col-md-9">
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.fairy + 10 %>%;" aria-valuenow="<%= current_user.fairy %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.fairy.round(2) %>%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <button class="btn-primary">Go Back</button>
+    </div>
+  </div>
+</div>
