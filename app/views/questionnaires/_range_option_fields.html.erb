@@ -1,4 +1,4 @@
-<div class="nested-fields option-field">
+<div class="nested-fields range-option-field">
   <div class="row">
     <div class="col-md-11">
       <% if f.object.id.present? %>
@@ -7,44 +7,49 @@
       <div class="row flex">
         <div class="col-md-1">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <%= f.text_field :title, class: "form-control", placeholder: 'Option title...' %>
+            <%= f.number_field :min_range, class: "form-control", placeholder: 'Min range ...' %>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= f.number_field :max_range, class: "form-control", placeholder: 'Max Range' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :witch_points, class: "form-control", placeholder: 'Witch' %>
+            <%= f.number_field :witch_percentage, class: "form-control", placeholder: 'Witch' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :wizard_points, class: "form-control", placeholder: 'Wizard' %>
+            <%= f.number_field :wizard_percentage, class: "form-control", placeholder: 'Wizard' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :lepracaun_points, class: "form-control", placeholder: 'Lepracaun' %>
+            <%= f.number_field :lepracaun_percentage, class: "form-control", placeholder: 'Lepracaun' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :dragon_points, class: "form-control", placeholder: 'Dragon' %>
+            <%= f.number_field :dragon_percentage, class: "form-control", placeholder: 'Dragon' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :human_points, class: "form-control", placeholder: 'Human' %>
+            <%= f.number_field :human_percentage, class: "form-control", placeholder: 'Human' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :elf_points, class: "form-control", placeholder: 'Elf' %>
+            <%= f.number_field :elf_percentage, class: "form-control", placeholder: 'Elf' %>
           </div>
         </div>
         <div class="col-md-1 px-1">
           <div class="form-group">
-            <%= f.number_field :fairy_points, class: "form-control", placeholder: 'Fairy' %>
+            <%= f.number_field :fairy_percentage, class: "form-control", placeholder: 'Fairy' %>
           </div>
         </div>
       </div>

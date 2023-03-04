@@ -1,18 +1,14 @@
 class Question < ApplicationRecord
   belongs_to :questionnaire, inverse_of: :questions
   has_many :options, inverse_of: :question, dependent: :destroy
+  has_many :range_options, dependent: :destroy
+  has_many :picture_options, dependent: :destroy
+
+  accepts_nested_attributes_for :picture_options, allow_destroy: true
+  accepts_nested_attributes_for :range_options, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
 
+  enum question_type: { 'single_choice': 0, 'multiple_choice': 1, 'range': 2, 'picture': 3 }
+
   validates :title, presence: true
-  validates :score, numericality: { greater_than: 0 }
-
-  validate :options_score_not_greater_than_question_score
-
-  private
-
-  def options_score_not_greater_than_question_score
-    if options.sum(:points) > score
-      errors.add(:options, "total points can't be greater than question score")
-    end
-  end
 end

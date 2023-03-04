@@ -73,6 +73,7 @@
   padding: 24px;
   page-break-inside: avoid;
   word-wrap: break-word;
+  width: 100%;
 }
 
 .col-50 {

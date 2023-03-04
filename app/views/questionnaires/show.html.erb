@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <h3><%= @questionnaire.title %>(<%= @questionnaire.total_score %> points)</h3>
+    <h3><%= @questionnaire.title %></h3>
     <h3><%= @questionnaire.description %></h3>
   </div>
   <div class="card-body">
@@ -12,7 +12,6 @@
               <th>#</th>
               <th class="col-50">Question</th>
               <th>Options</th>
-              <th>Score</th>
             </tr>
           </thead>
           <tbody>
@@ -31,21 +30,12 @@
                     <% end %>
                   <% end %>
                 </td>
-                <td>
-                  <%= question.score %>
-                </td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12 text-right">
-        <p class="font-weight-bold">Total Points: <%= @questionnaire.total_score %></p>
-      </div>
-    </div>
-
     <%= link_to 'Edit', edit_questionnaire_path(@questionnaire), class: "btn btn-primary" %>
     <%= link_to 'Back', questionnaires_path, class: "btn btn-secondary" %>
   </div>

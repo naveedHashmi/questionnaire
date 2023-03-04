@@ -65,6 +65,52 @@ class QuestionnairesController < ApplicationController
   end
 
   def questionnaire_params
-    params.require(:questionnaire).permit(:title, :total_score, :description, questions_attributes: [:id, :title, :score, :question_type, :_destroy, options_attributes: [:id, :title, :points, :_destroy]])
+    params.require(:questionnaire).permit(
+      :title,
+      :description,
+      questions_attributes: [
+        :id,
+        :title,
+        :question_type,
+        :_destroy,
+        options_attributes: [
+          :id,
+          :title,
+          :witch_points,
+          :wizard_points,
+          :lepracaun_points,
+          :dragon_points,
+          :human_points,
+          :elf_points,
+          :fairy_points,
+          :_destroy,
+        ],
+        picture_options_attributes: [
+          :id,
+          :picture,
+          :witch_points,
+          :wizard_points,
+          :lepracaun_points,
+          :dragon_points,
+          :human_points,
+          :elf_points,
+          :fairy_points,
+          :_destroy,
+        ],
+        range_options_attributes: [
+          :id,
+          :min_range,
+          :max_range,
+          :witch_percentage,
+          :wizard_percentage,
+          :lepracaun_percentage,
+          :dragon_percentage,
+          :human_percentage,
+          :elf_percentage,
+          :fairy_percentage,
+          :_destroy,
+        ]
+      ]
+    )
   end
 end
