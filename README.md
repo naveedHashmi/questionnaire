@@ -16,6 +16,12 @@ Before you start, make sure you have installed the following:
 4. Setup the database: `rails db:setup`
 5. Start the server: `rails server`
 
+## Creating an admin user
+1. Sign up in the questionnaire
+2. Go to the terminal in the project root directory and type `rails c`
+3. Type `User.find_by(email: 'YOUR_EMAIL').update(role: 'admin')`
+4. Go to the app and enjoy the features of admin
+
 ## Running the Tests
 To run the tests, run the following command: `rails test`
 
