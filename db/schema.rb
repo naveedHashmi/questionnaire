@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_03_041348) do
+ActiveRecord::Schema.define(version: 2023_03_04_063024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 2023_03_03_041348) do
     t.string "title", default: "", null: false
     t.decimal "witch_points", precision: 10, scale: 2
     t.decimal "wizard_points", precision: 10, scale: 2
-    t.decimal "lepracaun_points", precision: 10, scale: 2
+    t.decimal "leprechaun_points", precision: 10, scale: 2
     t.decimal "dragon_points", precision: 10, scale: 2
     t.decimal "human_points", precision: 10, scale: 2
     t.decimal "elf_points", precision: 10, scale: 2
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2023_03_03_041348) do
     t.bigint "question_id"
     t.decimal "witch_points", precision: 10, scale: 2
     t.decimal "wizard_points", precision: 10, scale: 2
-    t.decimal "lepracaun_points", precision: 10, scale: 2
+    t.decimal "leprechaun_points", precision: 10, scale: 2
     t.decimal "dragon_points", precision: 10, scale: 2
     t.decimal "human_points", precision: 10, scale: 2
     t.decimal "elf_points", precision: 10, scale: 2
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2023_03_03_041348) do
     t.decimal "max_range"
     t.decimal "witch_percentage", precision: 10, scale: 2
     t.decimal "wizard_percentage", precision: 10, scale: 2
-    t.decimal "lepracaun_percentage", precision: 10, scale: 2
+    t.decimal "leprechaun_percentage", precision: 10, scale: 2
     t.decimal "dragon_percentage", precision: 10, scale: 2
     t.decimal "human_percentage", precision: 10, scale: 2
     t.decimal "elf_percentage", precision: 10, scale: 2
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2023_03_03_041348) do
     t.bigint "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", default: ""
     t.index ["question_id"], name: "index_range_options_on_question_id"
   end
 

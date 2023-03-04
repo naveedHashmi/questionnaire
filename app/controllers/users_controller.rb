@@ -6,6 +6,6 @@ class UsersController < ApplicationController
   end
 
   def submit_answers
-    redirect_to root_path
+    current_user.recalculate_score(params.permit!)
   end
 end

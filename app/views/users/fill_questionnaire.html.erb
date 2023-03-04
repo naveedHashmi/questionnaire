@@ -4,14 +4,33 @@
       <div class="question-container custom-card mt-2 mt-2 ">
         <div class="card-body">
           <h4 class="card-title"><%= index + 1 %>. <%= question.title %></h4>
-          <% question.options.each_with_index do |option, option_index| %>
+          <% question.all_options.each_with_index do |option, option_index| %>
             <div class="option-container form-check">
-              <% if question.question_type == "single_choice" %>
+              <% if question.single_choice? || question.picture? %>
                 <%= radio_button_tag "questionnaire[questions][#{question.id}][selected_option_id]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
-              <% else %>
+              <% elsif question.multiple_choice? %>
                 <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
+              <% elsif question.range? %>
+                <div class="row">
+                  <div class="col-md-5">
+                    <%= option_index + 1 %>. <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
+                    <br>
+                    <input type="range" id="option_<%= option.id %>" name="option_<%= option.id %>" min="<%= option.min_range %>" max="<%= option.max_range %>">
+                    <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input invisible option_#{option.id}", checked: true %>
+                  </div>
+                  <div class="col-md-1 text-center">
+                    <br>
+                    <div class="selected-range-value option_<%= option.id %> btn-primary mb-1">
+                      <%= option.min_range %>
+                    </div>
+                  </div>
+                </div>
               <% end %>
-              <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
+              <% if question.picture? %>
+                <%= image_tag url_for(option.picture), width: 300, class: "mb-5" %>
+              <% elsif question.single_choice? || question.multiple_choice? %>
+                <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
+              <% end %>
             </div>
           <% end %>
         </div>
@@ -20,5 +39,3 @@
     <%= submit_tag "Submit", id: "submit-answers-button", class: "btn btn-primary mb-3" %>
   <% end %>
 </div>
-
-<%= render 'modal' %>

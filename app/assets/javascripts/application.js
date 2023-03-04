@@ -17,6 +17,8 @@
 //= require popper
 //= require bootstrap
 //= require cocoon
+//= require jquery
+//= require jquery-ui/widgets/slider
 //= require_tree .
 
 $(document).ready(function() {
@@ -57,3 +59,10 @@ $(document).on('change', '.picture-option-field', function() {
   }
   reader.readAsDataURL(this.files[0]);
 });
+
+$(document).on("change", $('input[type="range"]'), function(){
+  var targetId = $(event.target).attr('id')
+
+  $(`.selected-range-value.${targetId}`).html(event.target.value);
+  $(`input[type="checkbox"].${targetId}`).val(event.target.value);
+})
