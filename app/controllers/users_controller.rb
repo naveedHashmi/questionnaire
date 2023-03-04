@@ -6,6 +6,5 @@ class UsersController < ApplicationController
   end
 
   def submit_answers
-    redirect_to root_path
   end
 end

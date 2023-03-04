@@ -12,6 +12,7 @@
               <th>#</th>
               <th class="col-50">Question</th>
               <th>Options</th>
+              <th>Points</th>
             </tr>
           </thead>
           <tbody>
@@ -24,9 +25,18 @@
                     <% question.options.each do |option| %>
                       <p>○ <%= option.title %></p>
                     <% end %>
-                  <% else %>
+                  <% elsif question.question_type == 'multiple_choice' %>
                     <% question.options.each do |option| %>
                         <p>□ <%= option.title %></p>
+                    <% end %>
+                  <% elsif question.question_type == 'range' %>
+                    <% question.range_options.each do |option| %>
+                      <p>Min Range: <%= option.min_range %></p>
+                      <p>Max Range: <%= option.max_range %></p>
+                    <% end %>
+                  <% else %>
+                    <% question.picture_options.each do |option| %>
+                      <%= image_tag url_for(option.picture), width: 300, class: "mb-5" %>
                     <% end %>
                   <% end %>
                 </td>
