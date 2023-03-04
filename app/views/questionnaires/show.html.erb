@@ -12,7 +12,6 @@
               <th>#</th>
               <th class="col-50">Question</th>
               <th>Options</th>
-              <th>Points</th>
             </tr>
           </thead>
           <tbody>
@@ -31,8 +30,7 @@
                     <% end %>
                   <% elsif question.question_type == 'range' %>
                     <% question.range_options.each do |option| %>
-                      <p>Min Range: <%= option.min_range %></p>
-                      <p>Max Range: <%= option.max_range %></p>
+                      <p><%= option.title %>: Min Range: <%= option.min_range %> | Max Range: <%= option.max_range %></p>
                     <% end %>
                   <% else %>
                     <% question.picture_options.each do |option| %>

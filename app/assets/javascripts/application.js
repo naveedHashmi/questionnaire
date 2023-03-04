@@ -60,11 +60,9 @@ $(document).on('change', '.picture-option-field', function() {
   reader.readAsDataURL(this.files[0]);
 });
 
-$(function() {
-  $('body').on("change", $('input[type="range"]'), function(){
-    var targetId = $(event.target).attr('id')
+$(document).on("change", $('input[type="range"]'), function(){
+  var targetId = $(event.target).attr('id')
 
-    $(`.selected-range-value.${targetId}`).html(event.target.value);
-    $(`input[type="checkbox"].${targetId}`).val(event.target.value);
-  })
-});
+  $(`.selected-range-value.${targetId}`).html(event.target.value);
+  $(`input[type="checkbox"].${targetId}`).val(event.target.value);
+})

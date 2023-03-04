@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :wizard, :witch, :lepracaun, :dragon, :human, :elf, :fairy, :params
+  attr_accessor :wizard, :witch, :leprechaun, :dragon, :human, :elf, :fairy, :params
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :confirmable, :database_authenticatable, :registerable,
@@ -34,14 +34,14 @@ class User < ApplicationRecord
   private
 
   def initialize_attributes(params)
-    @wizard, @witch, @lepracaun, @dragon, @human, @elf, @fairy, @params = 0, 0, 0, 0, 0, 0, 0, params
+    @wizard, @witch, @leprechaun, @dragon, @human, @elf, @fairy, @params = 0, 0, 0, 0, 0, 0, 0, params
   end
 
   def add_score(options, question_type)
     if ['single_choice', 'multiple_choice', 'picture'].include? question_type
       @wizard += options.sum(:wizard_points)
       @witch += options.sum(:witch_points)
-      @lepracaun += options.sum(:lepracaun_points)
+      @leprechaun += options.sum(:leprechaun_points)
       @dragon += options.sum(:dragon_points)
       @human += options.sum(:human_points)
       @elf += options.sum(:elf_points)
@@ -50,7 +50,7 @@ class User < ApplicationRecord
       options.each do |option|
         @wizard += @params["option_#{option.id}"].to_i * option.wizard_percentage
         @witch += @params["option_#{option.id}"].to_i * option.witch_percentage
-        @lepracaun += @params["option_#{option.id}"].to_i * option.lepracaun_percentage
+        @leprechaun += @params["option_#{option.id}"].to_i * option.leprechaun_percentage
         @dragon += @params["option_#{option.id}"].to_i * option.dragon_percentage
         @human += @params["option_#{option.id}"].to_i * option.human_percentage
         @elf += @params["option_#{option.id}"].to_i * option.elf_percentage
@@ -60,10 +60,10 @@ class User < ApplicationRecord
   end
 
   def calcualte_percentage
-    total_score = @wizard + @witch + @lepracaun + @dragon + @human + @elf + @fairy
+    total_score = @wizard + @witch + @leprechaun + @dragon + @human + @elf + @fairy
     @wizard = (@wizard / total_score) * 100
     @witch = (@witch / total_score) * 100
-    @lepracaun = (@lepracaun / total_score) * 100
+    @leprechaun = (@leprechaun / total_score) * 100
     @dragon = (@dragon / total_score) * 100
     @human = (@human / total_score) * 100
     @elf = (@elf / total_score) * 100

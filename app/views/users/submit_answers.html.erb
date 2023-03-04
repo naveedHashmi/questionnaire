@@ -24,7 +24,7 @@
           <h4 class="mb-0">Leprechaun</h4>
         </div>
         <div class="col-md-9">
-          <div class="progress-bar" role="progressbar" style="width: <%= current_user.lepracaun + 10 %>%;" aria-valuenow="<%= current_user.lepracaun %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.lepracaun.round(2) %>%</div>
+          <div class="progress-bar" role="progressbar" style="width: <%= current_user.leprechaun + 10 %>%;" aria-valuenow="<%= current_user.leprechaun %>" aria-valuemin="0" aria-valuemax="100"><%= current_user.leprechaun.round(2) %>%</div>
         </div>
       </div>
       <div class="row">
@@ -63,7 +63,7 @@
   </div>
   <div class="row">
     <div class="col-md-5">
-      <button class="btn-primary">Go Back</button>
+      <%= link_to 'Go Back', root_path, class: "btn btn-primary btn-lg" %>
     </div>
   </div>
 </div>
