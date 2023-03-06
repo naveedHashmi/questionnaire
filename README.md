@@ -5,8 +5,8 @@ The questionnaire consists of a series of questions. To get started, please clic
 
 ## Prerequisites
 Before you start, make sure you have installed the following:
-* Ruby 2.7.0
-* Rails 5.2.3
+* Ruby 3.2.0
+* Rails 6.0.0
 * PostgreSQL 14 or latest
 
 ## Getting Started
