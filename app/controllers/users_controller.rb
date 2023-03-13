@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def fill_questionnaire
-    @questionnaire = Questionnaire.first
+    @questionnaire = Questionnaire.order(:updated_at).last
   end
 
   def submit_answers
