@@ -11,22 +11,14 @@ class User < ApplicationRecord
   def recalculate_score(params)
     initialize_attributes(params)
 
-    answers = params[:questionnaire][:questions]
-    questions = Question.includes(:options, :range_options, :picture_options).where(id: answers.keys)
+    range_answers = params['range_options'][0] || []
+    picture_options = params['picture_options']
+    single_choice_options = params['single_choice']
+    multi_choice_options = params['multi_choice']
 
-    questions.each do |question|
-
-      options = if question.single_choice? || question.multiple_choice?
-                  question.options.where(id: answers[question.id.to_s]["selected_option_id"])
-                elsif question.picture?
-                  question.picture_options.where(id: answers[question.id.to_s]["selected_option_id"])
-                else
-
-                  question.range_options.where(id: answers[question.id.to_s]["selected_option_ids"])
-                end
-
-      add_score(options, question.question_type)
-    end
+    add_score(Option.where(id: single_choice_options.to_a + multi_choice_options.to_a), nil)
+    add_score(PictureOption.where(id: picture_options), nil)
+    add_score(RangeOption.where(id: range_answers.map(&:first).map{ |option| option.split('_').last } ), 'range')
 
     calcualte_percentage
   end
@@ -34,39 +26,41 @@ class User < ApplicationRecord
   private
 
   def initialize_attributes(params)
-    @wizard, @witch, @leprechaun, @dragon, @human, @elf, @fairy, @params = 0, 0, 0, 0, 0, 0, 0, params
+    @wizard, @witch, @leprechaun, @dragon, @human, @elf, @fairy, @range_options = 0, 0, 0, 0, 0, 0, 0, params['range_options'][0]&.to_h || []
   end
 
   def add_score(options, question_type)
-    if ['single_choice', 'multiple_choice', 'picture'].include? question_type
-      @wizard += options.sum(:wizard_points)
-      @witch += options.sum(:witch_points)
-      @leprechaun += options.sum(:leprechaun_points)
-      @dragon += options.sum(:dragon_points)
-      @human += options.sum(:human_points)
-      @elf += options.sum(:elf_points)
-      @fairy += options.sum(:fairy_points)
-    else
+    return unless options.present?
+
+    if question_type == 'range'
       options.each do |option|
-        @wizard += @params["option_#{option.id}"].to_i * option.wizard_percentage
-        @witch += @params["option_#{option.id}"].to_i * option.witch_percentage
-        @leprechaun += @params["option_#{option.id}"].to_i * option.leprechaun_percentage
-        @dragon += @params["option_#{option.id}"].to_i * option.dragon_percentage
-        @human += @params["option_#{option.id}"].to_i * option.human_percentage
-        @elf += @params["option_#{option.id}"].to_i * option.elf_percentage
-        @fairy += @params["option_#{option.id}"].to_i * option.fairy_percentage
+        @wizard += @range_options["option_#{option.id}"].to_f * option.wizard_percentage
+        @witch += @range_options["option_#{option.id}"].to_f * option.witch_percentage
+        @leprechaun += @range_options["option_#{option.id}"].to_f * option.leprechaun_percentage
+        @dragon += @range_options["option_#{option.id}"].to_f * option.dragon_percentage
+        @human += @range_options["option_#{option.id}"].to_f * option.human_percentage
+        @elf += @range_options["option_#{option.id}"].to_f * option.elf_percentage
+        @fairy += @range_options["option_#{option.id}"].to_f * option.fairy_percentage
       end
+    else
+      @wizard += options.sum(:wizard_points).to_f
+      @witch += options.sum(:witch_points).to_f
+      @leprechaun += options.sum(:leprechaun_points).to_f
+      @dragon += options.sum(:dragon_points).to_f
+      @human += options.sum(:human_points).to_f
+      @elf += options.sum(:elf_points).to_f
+      @fairy += options.sum(:fairy_points).to_f
     end
   end
 
   def calcualte_percentage
     total_score = @wizard + @witch + @leprechaun + @dragon + @human + @elf + @fairy
-    @wizard = (@wizard / total_score) * 100
-    @witch = (@witch / total_score) * 100
-    @leprechaun = (@leprechaun / total_score) * 100
-    @dragon = (@dragon / total_score) * 100
-    @human = (@human / total_score) * 100
-    @elf = (@elf / total_score) * 100
-    @fairy = (@fairy / total_score) * 100
+    @wizard = (@wizard / total_score) * 100 || 0
+    @witch = (@witch / total_score) * 100 || 0
+    @leprechaun = (@leprechaun / total_score) * 100 || 0
+    @dragon = (@dragon / total_score) * 100 || 0
+    @human = (@human / total_score) * 100 || 0
+    @elf = (@elf / total_score) * 100 || 0
+    @fairy = (@fairy / total_score) * 100 || 0
   end
 end

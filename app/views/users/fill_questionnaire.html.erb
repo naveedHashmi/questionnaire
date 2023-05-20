@@ -1,41 +1,173 @@
-<div class="container mt-5 card">
-  <%= form_tag({controller: "users", action: "submit_answers"}, method: "post", id: "fill-questionnaire-form") do %>
-    <% @questionnaire.questions.each_with_index do |question, index| %>
-      <div class="question-container custom-card mt-2 mt-2 ">
-        <div class="card-body">
-          <h4 class="card-title"><%= index + 1 %>. <%= question.title %></h4>
-          <% question.all_options.each_with_index do |option, option_index| %>
-            <div class="option-container form-check">
-              <% if question.single_choice? || question.picture? %>
-                <%= radio_button_tag "questionnaire[questions][#{question.id}][selected_option_id]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
-              <% elsif question.multiple_choice? %>
-                <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input", id: "option_#{option.id}" %>
-              <% elsif question.range? %>
-                <div class="row">
-                  <div class="col-md-5">
-                    <%= option_index + 1 %>. <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
-                    <br>
-                    <input type="range" id="option_<%= option.id %>" name="option_<%= option.id %>" min="<%= option.min_range %>" max="<%= option.max_range %>">
-                    <%= check_box_tag "questionnaire[questions][#{question.id}][selected_option_ids][]", option.id, false, class: "form-check-input invisible option_#{option.id}", checked: true %>
-                  </div>
-                  <div class="col-md-1 text-center">
-                    <br>
-                    <div class="selected-range-value option_<%= option.id %> btn-primary mb-1">
-                      <%= option.min_range %>
-                    </div>
+<div id="submit-answers">
+  <form>
+    <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>"
+    />
+  </form>
+  <div id="questionnaire" class="primary-gradient">
+    <div class="row justify-content-center">
+      <h3><%= @questionnaire.title %></h3>
+    </div>
+    <div class="row mb-3">
+      <div class="col-1"></div>
+      <div class="col-9"><%= render 'ui/progress_bar' %></div>
+      <div id="questions-count" class="col-2"></div>
+    </div>
+    <div class="row border-container-3d m-auto">
+      <div class="col-6">
+        <h2>Question:</h2>
+        <div id="question-container"></div>
+      </div>
+      <div class="col-5">
+        <div id="answer-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var questions = <%= raw @questions.to_json() %>;
+    var radioOptions = [];
+    var multiOptions = [];
+    var pictureOptinos = [];
+    var rangeOptions = [];
+    var currentQuestionIndex = 0;
+    var totalQuestions = questions.length;
+
+    function renderQuestion() {
+      var question = questions[currentQuestionIndex];
+
+      $("#questions-count").text(`Question ${currentQuestionIndex + 1} of ${totalQuestions}`)
+      $('#question-container').html('<div><h2>' + question.title + '</h2></div>');
+    }
+
+    function renderAnswers() {
+      var question = questions[currentQuestionIndex];
+      var inputType = null;
+      switch(question.question_type) {
+        case "multiple_choice":
+          inputType = "checkbox"
+          break;
+        case "range":
+          inputType = "range"
+          break;
+        case "picture":
+          inputType = "picture"
+          break;
+        default:
+          inputType = "radio"
+          break;
+      }
+      $('#answer-container').html('');
+
+
+      var questionOptions = question.options.map(answer => {
+        return '<li class="list-group-item"><input type='+ inputType +' name="answer" value="' + answer.id + '">' + answer.title + '</li>'
+      })
+
+      questionOptions = questionOptions.concat(question.picture_options.map(option => {
+        return `<li class="list-group-item">
+        <div class="row">
+          <div class="col-1">
+            <input type='radio' name="answer" value="${option.id}"></input>
+          </div>
+          <div class="col=10">
+            <img width="300" class="mb-5" src="${option.picture_url}" />
+          </div>
+        </li>`
+      }))
+
+      questionOptions = questionOptions.concat(question.range_options.map(option =>{
+        return `<li class="list-group-item">
+            <div class="row">
+              <div class="col-6">
+                  <label class="form-check-label" for="option_${option.id}">${option.title}</label>
+                  <br>
+                  <input class="answer" type="range" id="option_${option.id}" name="option_${option.id}" min=${option.min_range} max=${option.max_range} value=${option.min_range}>
+                  <input type="checkbox" name="questionnaire[questions][${question.id}][selected_option_ids][]" id="questionnaire_questions_${question.id}_selected_option_ids_" value=${option.id} class="form-check-input invisible option_${option.id}" checked="checked">
+                </div>
+                <div class="col-3 text-center">
+                  <br>
+                  <div class="selected-range-value option_${option.id} btn-primary mb-1">
+                    0.0
                   </div>
                 </div>
-              <% end %>
-              <% if question.picture? %>
-                <%= image_tag url_for(option.picture), width: 300, class: "mb-5" %>
-              <% elsif question.single_choice? || question.multiple_choice? %>
-                <%= label_tag "option_#{option.id}", option.title, class: "form-check-label" %>
-              <% end %>
             </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <%= submit_tag "Submit", id: "submit-answers-button", class: "btn btn-primary mb-3" %>
-  <% end %>
+          </li>`
+
+      }))
+
+      var htmlOptions = `<div class="card bg-transparent">
+          <div class="card-header">
+            <div class='row flex-start'>
+              <div class="col-7">Select Answer(s)</div>
+              <div class="col-4"><button id="next-question" class="btn-primary">Next question</button></div>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">`
+
+          $.each(questionOptions, (index, option) => {
+            htmlOptions += option
+          })
+
+          htmlOptions = htmlOptions + `</ul>
+        </div>`
+
+        $('#answer-container').html(htmlOptions);
+    }
+
+    function renderProgressBar() {
+      var progressBarWidth = (((currentQuestionIndex + 1) / questions.length) * 100) + '%';
+      $('#progress-bar').css('width', progressBarWidth );
+      $('#progress-bar').text(progressBarWidth == '0%' ? '1' : progressBarWidth);
+    }
+
+    function getNextQuestion() {
+      if (currentQuestionIndex < questions.length) {
+        var question = questions[currentQuestionIndex]
+        var questionType = question.question_type
+        var selectedAnswerIds =  $('input[type="range"], input[name="answer"]:checked').map(function(){
+                                  return questionType == "range" ? [[$(this).attr('name'), $(this).val()]] : [$(this).val()];
+                                }).get()
+
+        switch (questionType) {
+          case "range":
+            rangeOptions.push(selectedAnswerIds)
+            break;
+          case "multiple_choice":
+            multiOptions = multiOptions.concat(selectedAnswerIds)
+            break;
+          case "single_choice":
+            radioOptions = radioOptions.concat(selectedAnswerIds)
+            break;
+          case "picture":
+            pictureOptinos = pictureOptinos.concat(selectedAnswerIds)
+            break;
+          default:
+          break;
+        }
+      }
+
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        renderQuestion();
+        renderAnswers();
+        renderProgressBar();
+      } else {
+        $.ajax({
+          url: '/submit_answers',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ authenticity_token: $('input[name="authenticity_token"]').val(), range_options: rangeOptions, picture_options: pictureOptinos, single_choice: radioOptions, multi_choice: multiOptions }),
+        });
+      }
+    }
+
+    $('body').on('click', '#next-question', getNextQuestion);
+
+    renderQuestion();
+    renderAnswers();
+    renderProgressBar();
+  </script>
 </div>
