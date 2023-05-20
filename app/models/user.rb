@@ -55,12 +55,13 @@ class User < ApplicationRecord
 
   def calcualte_percentage
     total_score = @wizard + @witch + @leprechaun + @dragon + @human + @elf + @fairy
-    @wizard = (@wizard / total_score) * 100 || 0
-    @witch = (@witch / total_score) * 100 || 0
-    @leprechaun = (@leprechaun / total_score) * 100 || 0
-    @dragon = (@dragon / total_score) * 100 || 0
-    @human = (@human / total_score) * 100 || 0
-    @elf = (@elf / total_score) * 100 || 0
-    @fairy = (@fairy / total_score) * 100 || 0
+    total_score = total_score.zero? ? 1 : total_score
+    @wizard = (@wizard / total_score) * 100
+    @witch = (@witch / total_score) * 100
+    @leprechaun = (@leprechaun / total_score) * 100
+    @dragon = (@dragon / total_score) * 100
+    @human = (@human / total_score) * 100
+    @elf = (@elf / total_score) * 100
+    @fairy = (@fairy / total_score) * 100
   end
 end

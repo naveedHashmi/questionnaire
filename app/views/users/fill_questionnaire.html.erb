@@ -34,6 +34,7 @@
     var rangeOptions = [];
     var currentQuestionIndex = 0;
     var totalQuestions = questions.length;
+    var alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
     function renderQuestion() {
       var question = questions[currentQuestionIndex];
@@ -62,19 +63,35 @@
       $('#answer-container').html('');
 
 
-      var questionOptions = question.options.map(answer => {
-        return '<li class="list-group-item"><input type='+ inputType +' name="answer" value="' + answer.id + '">' + answer.title + '</li>'
+      var questionOptions = question.options.map((answer, index) => {
+        return `<li class="list-group-item">
+          <div class="row">
+            <div class="col-10">
+              <input type=${inputType} name="answer" value=${answer.id} /> ${answer.title}
+            </div>
+            <div class="col-2">
+              <h2>${alphabets[index]}</h3>
+            </div>
+          </div>
+        </li>`
       })
 
-      questionOptions = questionOptions.concat(question.picture_options.map(option => {
+      questionOptions = questionOptions.concat(question.picture_options.map((option, index) => {
         return `<li class="list-group-item">
         <div class="row">
-          <div class="col-1">
-            <input type='radio' name="answer" value="${option.id}"></input>
+          <div class="col-10">
+            <div class="row">
+              <div class="col-1">
+                <input type='radio' name="answer" value="${option.id}"></input>
+              </div>
+              <div class="col=11">
+                <img width="300" class="mb-5" src="${option.picture_url}" />
+              </div>
+            </div>
           </div>
-          <div class="col=10">
-            <img width="300" class="mb-5" src="${option.picture_url}" />
-          </div>
+          <div class="col-2">
+              <h2>${alphabets[index]}</h3>
+            </div>
         </li>`
       }))
 
